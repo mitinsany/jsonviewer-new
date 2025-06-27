@@ -1,0 +1,44 @@
+name: Test Build
+
+on:
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build Docker image
+      run: make build
+      
+    - name: Test ExtJS application build
+      run: make prod
+      
+    - name: Verify build output
+      run: |
+        # Проверяем, что сборка создалась
+        if [ ! -d "build/production/JsonViewer" ]; then
+          echo "❌ Production build not found"
+          exit 1
+        fi
+        
+        # Проверяем основные файлы
+        if [ ! -f "build/production/JsonViewer/index.html" ]; then
+          echo "❌ index.html not found"
+          exit 1
+        fi
+        
+        if [ ! -f "build/production/JsonViewer/app.js" ]; then
+          echo "❌ app.js not found"
+          exit 1
+        fi
+        
+        echo "✅ Build verification passed"
+        echo "📁 Build size: $(du -sh build/production/JsonViewer/ | cut -f1)" 
