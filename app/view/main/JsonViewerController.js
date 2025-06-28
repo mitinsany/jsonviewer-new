@@ -195,7 +195,10 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
         if (Array.isArray(data)) {
             var children = data.map(function(item, index) {
                 var childPath = path ? path + '[' + index + ']' : '[' + index + ']';
-                return me.convertJsonToTreeData(item, childPath);
+                var childNode = me.convertJsonToTreeData(item, childPath);
+                // Добавляем индекс к тексту для массивов
+                childNode.text = '[' + index + ']: ' + childNode.text;
+                return childNode;
             }, me);
             
             return {
@@ -214,7 +217,10 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                     var childPath = path ? path + '.' + key : key;
-                    children.push(me.convertJsonToTreeData(data[key], childPath));
+                    var childNode = me.convertJsonToTreeData(data[key], childPath);
+                    // Добавляем ключ к тексту для объектов
+                    childNode.text = key + ': ' + childNode.text;
+                    children.push(childNode);
                 }
             }
             
