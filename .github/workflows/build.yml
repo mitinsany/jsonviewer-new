@@ -35,10 +35,10 @@ jobs:
     #     # Копируем все файлы из production сборки в docs
     #     cp -r build/production/JsonViewer/* docs/
         
-    - name: Create .nojekyll file
-      run: |
-        # Создаем файл для отключения Jekyll на GitHub Pages
-        touch docs/.nojekyll
+    # - name: Create .nojekyll file
+    #   run: |
+    #     # Создаем файл для отключения Jekyll на GitHub Pages
+    #     touch docs/.nojekyll
         
     - name: Commit and push changes
       run: |
