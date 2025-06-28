@@ -93,21 +93,61 @@
 
 /* Стили для центрирования иконок в дереве */
 .x-tree-icon {
-    text-align: center !important;
-    width: 16px !important;
-    height: 16px !important;
-    margin-right: 5px !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
+    display: none !important;
 }
 
-.x-tree-icon:before {
-    font-family: 'FontAwesome' !important;
-    font-size: 14px !important;
-    line-height: 16px !important;
-    display: inline-block !important;
-    width: 100% !important;
-    text-align: center !important;
+.x-tree-node-text {
+    margin-left: 0 !important;
+}
+
+/* Настройка отображения наших иконок в дереве */
+.x-tree-node .x-tree-node-text:before {
+    font-family: 'FontAwesome';
+    margin-right: 5px;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+}
+
+/* Применение иконок к тексту узлов */
+.json-type-null .x-tree-node-text:before {
+    content: "\f10c"; /* fa-circle-o */
+    color: #696969;
+}
+
+.json-type-string .x-tree-node-text:before {
+    content: "\f15c"; /* fa-file-text-o */
+    color: #2E8B57;
+}
+
+.json-type-number .x-tree-node-text:before {
+    content: "\f1ec"; /* fa-calculator */
+    color: #1E90FF;
+}
+
+.json-type-boolean .x-tree-node-text:before {
+    content: "\f058"; /* fa-check-circle */
+    color: #FF8C00;
+}
+
+.json-type-boolean.false .x-tree-node-text:before {
+    content: "\f057"; /* fa-times-circle */
+    color: #FF8C00;
+}
+
+.json-type-object .x-tree-node-text:before {
+    content: "\f114"; /* fa-folder-o */
+    color: #8B4513;
+}
+
+.json-type-array .x-tree-node-text:before {
+    content: "\f0ca"; /* fa-list-ul */
+    color: #9932CC;
+}
+
+.json-type-unknown .x-tree-node-text:before {
+    content: "\f059"; /* fa-question-circle */
+    color: #DC143C;
 }
 
 /* Стили для JSON Viewer - совместимость с классической темой ExtJS */
@@ -285,4 +325,19 @@
 
 .x-btn-default-small:hover {
     background: #E8E8E8;
+}
+
+/* Стили для индикатора валидности JSON */
+.json-validation-valid {
+    color: #2E8B57;
+    background-color: #F0FFF0;
+    border: 1px solid #90EE90;
+    border-radius: 3px;
+}
+
+.json-validation-invalid {
+    color: #DC143C;
+    background-color: #FFF0F0;
+    border: 1px solid #FFB6C1;
+    border-radius: 3px;
 } 

@@ -11,41 +11,52 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
      */
     onTreeNodeSelect: function(tree, record) {
         var me = this;
-        var viewModel = me.getViewModel();
         
-        if (record) {
-            // Получаем данные узла разными способами в зависимости от типа record
-            var nodeData;
-            if (record.getData && typeof record.getData === 'function') {
-                nodeData = record.getData();
-            } else if (record.data) {
-                nodeData = record.data;
-            } else {
-                nodeData = record;
-            }
-            
-            var properties = me.extractProperties(nodeData);
-            
-            // Получаем store и обновляем его данные
-            var store = viewModel.getStore('selectedNodeProperties');
-            if (store) {
-                store.loadData(properties);
-            } else {
-                // Если store не найден, создаем его
-                viewModel.setStores({
-                    selectedNodeProperties: {
-                        type: 'array',
-                        fields: ['name', 'value', 'type'],
-                        data: properties
-                    }
-                });
-            }
+        // Проверяем, что все параметры существуют
+        if (!tree || !record) {
+            return;
+        }
+        
+        var viewModel = me.getViewModel();
+        if (!viewModel) {
+            return;
+        }
+        
+        // Получаем данные узла разными способами в зависимости от типа record
+        var nodeData;
+        if (record.getData && typeof record.getData === 'function') {
+            nodeData = record.getData();
+        } else if (record.data) {
+            nodeData = record.data;
         } else {
-            // Очищаем store если ничего не выбрано
-            var store = viewModel.getStore('selectedNodeProperties');
-            if (store) {
-                store.loadData([]);
-            }
+            nodeData = record;
+        }
+        
+        // Если nodeData это массив, берем первый элемент
+        if (Array.isArray(nodeData)) {
+            nodeData = nodeData[0];
+        }
+        
+        // Если это ExtJS Model, получаем данные из свойства data
+        if (nodeData && nodeData.data) {
+            nodeData = nodeData.data;
+        }
+        
+        var properties = me.extractProperties(nodeData);
+        
+        // Получаем store и обновляем его данные
+        var store = viewModel.getStore('selectedNodeProperties');
+        if (store) {
+            store.loadData(properties);
+        } else {
+            // Если store не найден, создаем его
+            viewModel.setStores({
+                selectedNodeProperties: {
+                    type: 'array',
+                    fields: ['name', 'value', 'type'],
+                    data: properties
+                }
+            });
         }
     },
 
@@ -55,35 +66,62 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
     extractProperties: function(nodeData) {
         var properties = [];
         
-        if (nodeData) {
-            // Добавляем основные свойства узла
+        if (!nodeData) {
+            return properties;
+        }
+        
+        // Добавляем основные свойства узла
+        properties.push({
+            name: 'Тип',
+            value: this.getNodeType(nodeData),
+            type: 'string'
+        });
+        
+        properties.push({
+            name: 'Путь',
+            value: nodeData.path || '',
+            type: 'string'
+        });
+        
+        // Проверяем, есть ли данные в узле
+        if (nodeData.data !== undefined) {
             properties.push({
-                name: 'Тип',
-                value: this.getNodeType(nodeData),
+                name: 'Значение',
+                value: this.formatValue(nodeData.data),
+                type: typeof nodeData.data
+            });
+        } else if (nodeData.text) {
+            // Если нет data, но есть text, используем его
+            properties.push({
+                name: 'Текст',
+                value: nodeData.text,
                 type: 'string'
             });
-            
+        }
+        
+        if (nodeData.children && nodeData.children.length > 0) {
             properties.push({
-                name: 'Путь',
-                value: nodeData.path || '',
+                name: 'Количество дочерних элементов',
+                value: nodeData.children.length,
+                type: 'number'
+            });
+        }
+        
+        // Добавляем дополнительные свойства
+        if (nodeData.leaf !== undefined) {
+            properties.push({
+                name: 'Листовой узел',
+                value: nodeData.leaf ? 'Да' : 'Нет',
+                type: 'boolean'
+            });
+        }
+        
+        if (nodeData.cls) {
+            properties.push({
+                name: 'CSS Класс',
+                value: nodeData.cls,
                 type: 'string'
             });
-            
-            if (nodeData.data !== undefined) {
-                properties.push({
-                    name: 'Значение',
-                    value: this.formatValue(nodeData.data),
-                    type: typeof nodeData.data
-                });
-            }
-            
-            if (nodeData.children && nodeData.children.length > 0) {
-                properties.push({
-                    name: 'Количество дочерних элементов',
-                    value: nodeData.children.length,
-                    type: 'number'
-                });
-            }
         }
         
         return properties;
@@ -93,6 +131,10 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
      * Определение типа узла
      */
     getNodeType: function(nodeData) {
+        if (!nodeData) {
+            return 'unknown';
+        }
+        
         if (nodeData.data === null) return 'null';
         if (Array.isArray(nodeData.data)) return 'array';
         if (typeof nodeData.data === 'object') return 'object';
@@ -125,13 +167,21 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
     updateTree: function(jsonData) {
         var me = this;
         var tree = me.lookupReference('jsonTree');
+        
+        if (!tree) {
+            return;
+        }
+        
         var store = tree.getStore();
+        if (!store) {
+            return;
+        }
         
         if (jsonData) {
             // Создаем корневой узел с именем "root"
             var rootNode = {
                 text: 'root',
-                iconCls: 'fa fa-database',
+                cls: 'json-type-object',
                 data: jsonData,
                 path: 'root',
                 children: [me.convertJsonToTreeData(jsonData, 'root')],
@@ -155,7 +205,7 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
         if (data === null) {
             return {
                 text: 'null',
-                iconCls: 'fa fa-circle',
+                cls: 'json-type-null',
                 data: null,
                 path: path,
                 leaf: true
@@ -165,7 +215,7 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
         if (typeof data === 'string') {
             return {
                 text: '"' + data + '"',
-                iconCls: 'fa fa-file-text-o',
+                cls: 'json-type-string',
                 data: data,
                 path: path,
                 leaf: true
@@ -175,7 +225,7 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
         if (typeof data === 'number') {
             return {
                 text: String(data),
-                iconCls: 'fa fa-hashtag',
+                cls: 'json-type-number',
                 data: data,
                 path: path,
                 leaf: true
@@ -185,7 +235,7 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
         if (typeof data === 'boolean') {
             return {
                 text: String(data),
-                iconCls: data ? 'fa fa-check' : 'fa fa-times',
+                cls: data ? 'json-type-boolean' : 'json-type-boolean false',
                 data: data,
                 path: path,
                 leaf: true
@@ -203,7 +253,7 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
             
             return {
                 text: 'Array (' + data.length + ')',
-                iconCls: 'fa fa-list',
+                cls: 'json-type-array',
                 data: data,
                 path: path,
                 children: children,
@@ -226,7 +276,7 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
             
             return {
                 text: 'Object (' + children.length + ')',
-                iconCls: 'fa fa-folder',
+                cls: 'json-type-object',
                 data: data,
                 path: path,
                 children: children,
@@ -237,7 +287,7 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
         
         return {
             text: 'Unknown',
-            iconCls: 'fa fa-question',
+            cls: 'json-type-unknown',
             data: data,
             path: path,
             leaf: true

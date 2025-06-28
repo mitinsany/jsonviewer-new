@@ -33,7 +33,9 @@ Ext.define('JsonViewer.view.main.JsonViewer', {
         split: true,
         collapsible: true,
         rootVisible: true,
-        useArrows: true,
+        useArrows: false,
+        lines: false,
+        hideHeaders: false,
         listeners: {
             selectionchange: 'onTreeNodeSelect'
         },
