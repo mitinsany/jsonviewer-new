@@ -42,6 +42,7 @@ Ext.define('JsonViewer.view.main.Main', {
         title: 'JSON Viewer',
         iconCls: 'fa fa-tree',
         xtype: 'jsonviewer',
+        reference: 'jsonViewerTab',
         disabled: true
     }]
 });

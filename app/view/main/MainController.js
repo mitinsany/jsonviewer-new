@@ -36,14 +36,10 @@ Ext.define('JsonViewer.view.main.MainController', {
                 jsonViewer.setDisabled(false);
                 jsonViewer.updateView(parsed);
                 
-                // Активируем вторую вкладку в TabBar
-                var tabPanel = this.getView();
-                var tabBar = tabPanel.getTabBar();
-                if (tabBar) {
-                    var secondTab = tabBar.getComponent(1);
-                    if (secondTab) {
-                        secondTab.setDisabled(false);
-                    }
+                // Активируем вторую вкладку через reference
+                var jsonViewerTab = this.lookupReference('jsonViewerTab');
+                if (jsonViewerTab) {
+                    jsonViewerTab.setDisabled(false);
                 }
             }
             
@@ -66,13 +62,9 @@ Ext.define('JsonViewer.view.main.MainController', {
 
     onJsonValid: function(jsonContent) {
         // Активируем вторую вкладку при валидном JSON
-        var tabPanel = this.getView();
-        var tabBar = tabPanel.getTabBar();
-        if (tabBar) {
-            var secondTab = tabBar.getComponent(1);
-            if (secondTab) {
-                secondTab.setDisabled(false);
-            }
+        var jsonViewerTab = this.lookupReference('jsonViewerTab');
+        if (jsonViewerTab) {
+            jsonViewerTab.setDisabled(false);
         }
     },
 
@@ -87,14 +79,10 @@ Ext.define('JsonViewer.view.main.MainController', {
             jsonViewer.setDisabled(true);
         }
         
-        // Деактивируем вторую вкладку в TabBar
-        var tabPanel = this.getView();
-        var tabBar = tabPanel.getTabBar();
-        if (tabBar) {
-            var secondTab = tabBar.getComponent(1);
-            if (secondTab) {
-                secondTab.setDisabled(true);
-            }
+        // Деактивируем вторую вкладку через reference
+        var jsonViewerTab = this.lookupReference('jsonViewerTab');
+        if (jsonViewerTab) {
+            jsonViewerTab.setDisabled(true);
         }
     },
 
