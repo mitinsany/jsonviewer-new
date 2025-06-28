@@ -114,11 +114,9 @@ Ext.define('JsonViewer.view.main.JsonInputController', {
             this.getViewModel().set('parsedJson', parsed);
             
             // Уведомляем главный контроллер о валидном JSON через EventBus
-            console.log('Firing jsonFormatted event via EventBus');
             Ext.GlobalEvents.fireEvent('jsonFormatted', value);
             
             // Дополнительное событие для активации вкладки
-            console.log('Firing jsonValid event via EventBus');
             Ext.GlobalEvents.fireEvent('jsonValid', value);
         } catch (e) {
             this.getViewModel().set('isJsonValid', false);

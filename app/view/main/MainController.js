@@ -65,24 +65,14 @@ Ext.define('JsonViewer.view.main.MainController', {
     },
 
     onJsonValid: function(jsonContent) {
-        console.log('onJsonValid called with:', jsonContent);
         // Активируем вторую вкладку при валидном JSON
         var tabPanel = this.getView();
         var tabBar = tabPanel.getTabBar();
-        console.log('TabPanel:', tabPanel);
-        console.log('TabBar:', tabBar);
         if (tabBar) {
             var secondTab = tabBar.getComponent(1);
-            console.log('Second tab:', secondTab);
             if (secondTab) {
-                console.log('Enabling second tab');
                 secondTab.setDisabled(false);
-                console.log('Second tab disabled after:', secondTab.disabled);
-            } else {
-                console.log('Second tab not found');
             }
-        } else {
-            console.log('TabBar not found');
         }
     },
 

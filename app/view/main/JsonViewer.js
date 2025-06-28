@@ -18,14 +18,9 @@ Ext.define('JsonViewer.view.main.JsonViewer', {
      * Обновление представления с новыми JSON данными
      */
     updateView: function(jsonData) {
-        console.log('JsonViewer.updateView called with:', jsonData);
         var controller = this.getController();
-        console.log('JsonViewer controller:', controller);
         if (controller && controller.updateTree) {
-            console.log('Calling controller.updateTree');
             controller.updateTree(jsonData);
-        } else {
-            console.log('Controller or updateTree method not found');
         }
     },
 

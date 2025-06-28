@@ -123,12 +123,9 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
      * Обновление дерева при изменении JSON
      */
     updateTree: function(jsonData) {
-        console.log('JsonViewerController.updateTree called with:', jsonData);
         var me = this;
         var tree = me.lookupReference('jsonTree');
-        console.log('Tree component:', tree);
         var store = tree.getStore();
-        console.log('Tree store:', store);
         
         if (jsonData) {
             // Создаем корневой узел с именем "root"
@@ -142,7 +139,6 @@ Ext.define('JsonViewer.view.main.JsonViewerController', {
                 expanded: true
             };
             
-            console.log('Root node:', rootNode);
             store.setRoot(rootNode);
         } else {
             store.setRoot(null);
