@@ -23,17 +23,17 @@ jobs:
     - name: Build ExtJS application
       run: make prod
       
-    - name: Prepare docs directory
-      run: |
-        # Создаем папку docs если её нет
-        mkdir -p docs
-        # Очищаем содержимое docs
-        rm -rf docs/*
+    # - name: Prepare docs directory
+    #   run: |
+    #     # Создаем папку docs если её нет
+    #     mkdir -p docs
+    #     # Очищаем содержимое docs
+    #     rm -rf docs/*
         
-    - name: Copy production build to docs
-      run: |
-        # Копируем все файлы из production сборки в docs
-        cp -r build/production/JsonViewer/* docs/
+    # - name: Copy production build to docs
+    #   run: |
+    #     # Копируем все файлы из production сборки в docs
+    #     cp -r build/production/JsonViewer/* docs/
         
     - name: Create .nojekyll file
       run: |
