@@ -26,6 +26,11 @@ jobs:
     - name: Build ExtJS application
       run: make prod
 
+    - name: Create .nojekyll file
+      run: |
+        # Создаем файл для отключения Jekyll на GitHub Pages
+        touch docs/.nojekyll
+
     - name: Update repo
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
