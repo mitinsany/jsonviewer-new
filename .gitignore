@@ -1,5 +1,7 @@
 # Sencha Cmd build artifacts
-build/
+build/development
+build/temp
+
 bootstrap.js
 bootstrap.json
 sass/example/bootstrap.js
