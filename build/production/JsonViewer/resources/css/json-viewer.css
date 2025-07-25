@@ -1,0 +1,343 @@
+/* OpenSans Fonts */
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-SemiboldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('../fonts/OpenSans-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+/* FontAwesome CSS */
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../font-awesome/fonts/fontawesome-webfont.eot?v=4.7.0');
+    src: url('../font-awesome/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+         url('../font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+         url('../font-awesome/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+         url('../font-awesome/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+         url('../font-awesome/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Стили для центрирования иконок в дереве */
+.x-tree-icon {
+    display: none !important;
+}
+
+.x-tree-node-text {
+    margin-left: 0 !important;
+}
+
+/* Настройка отображения наших иконок в дереве */
+.x-tree-node .x-tree-node-text:before {
+    font-family: 'FontAwesome';
+    margin-right: 5px;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+}
+
+/* Применение иконок к тексту узлов */
+.json-type-null .x-tree-node-text:before {
+    content: "\f10c"; /* fa-circle-o */
+    color: #696969;
+}
+
+.json-type-string .x-tree-node-text:before {
+    content: "\f15c"; /* fa-file-text-o */
+    color: #2E8B57;
+}
+
+.json-type-number .x-tree-node-text:before {
+    content: "\f1ec"; /* fa-calculator */
+    color: #1E90FF;
+}
+
+.json-type-boolean .x-tree-node-text:before {
+    content: "\f058"; /* fa-check-circle */
+    color: #FF8C00;
+}
+
+.json-type-boolean.false .x-tree-node-text:before {
+    content: "\f057"; /* fa-times-circle */
+    color: #FF8C00;
+}
+
+.json-type-object .x-tree-node-text:before {
+    content: "\f114"; /* fa-folder-o */
+    color: #8B4513;
+}
+
+.json-type-array .x-tree-node-text:before {
+    content: "\f0ca"; /* fa-list-ul */
+    color: #9932CC;
+}
+
+.json-type-unknown .x-tree-node-text:before {
+    content: "\f059"; /* fa-question-circle */
+    color: #DC143C;
+}
+
+/* Стили для JSON Viewer - совместимость с классической темой ExtJS */
+
+/* Применение шрифта OpenSans к основным элементам */
+.x-panel,
+.x-toolbar,
+.x-tab-bar,
+.x-tree-panel,
+.x-grid,
+.x-form-field {
+    font-family: 'OpenSans', Arial, sans-serif !important;
+}
+
+/* Специальные стили для заголовков */
+.x-panel-header,
+.x-tab-default,
+.x-grid-header {
+    font-family: 'OpenSans', Arial, sans-serif !important;
+    font-weight: 600;
+}
+
+/* Стили для кнопок */
+.x-btn {
+    font-family: 'OpenSans', Arial, sans-serif !important;
+    font-weight: 500;
+}
+
+/* Стили для JSON типов данных */
+.json-string {
+    color: #2E8B57; /* Sea Green */
+    font-weight: bold;
+}
+
+.json-number {
+    color: #1E90FF; /* Dodger Blue */
+    font-weight: bold;
+}
+
+.json-boolean {
+    color: #FF8C00; /* Dark Orange */
+    font-weight: bold;
+}
+
+.json-null {
+    color: #696969; /* Dim Gray */
+    font-style: italic;
+}
+
+.json-default {
+    color: #2F4F4F; /* Dark Slate Gray */
+}
+
+.type-string {
+    color: #2E8B57;
+    font-weight: bold;
+}
+
+.type-number {
+    color: #1E90FF;
+    font-weight: bold;
+}
+
+.type-boolean {
+    color: #FF8C00;
+    font-weight: bold;
+}
+
+.type-null {
+    color: #696969;
+    font-style: italic;
+}
+
+/* Стили для отключенной вкладки */
+.x-tab-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Стили для панели инструментов - классическая тема */
+.x-toolbar .x-btn {
+    margin-right: 5px;
+}
+
+/* Стили для текстового поля - классическая тема */
+.x-form-textarea {
+    font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    background-color: #FFFFFF;
+    border: 1px solid #B5B8C8;
+}
+
+.x-form-textarea:focus {
+    border-color: #157FCC;
+    box-shadow: 0 0 3px rgba(21, 127, 204, 0.3);
+}
+
+/* Стили для табов - классическая тема */
+.x-tab-bar-default {
+    background-color: #F9F9F9;
+    border-bottom: 1px solid #B5B8C8;
+}
+
+.x-tab-default {
+    border: 1px solid #B5B8C8;
+    background: #F9F9F9;
+    margin-right: 2px;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+}
+
+.x-tab-default-active {
+    background-color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
+    margin-bottom: -1px;
+}
+
+.x-tab-default:hover {
+    background-color: #E8E8E8;
+}
+
+/* Стили для кнопок в тулбаре */
+.x-btn .x-btn-icon {
+    font-size: 14px;
+}
+
+/* FontAwesome иконки */
+.x-btn-icon-el:before {
+    font-family: 'FontAwesome' !important;
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Иконка для кнопки Format */
+.x-btn-format .x-btn-icon-el:before {
+    content: "\f0c9" !important; /* fa-bars */
+}
+
+/* Иконка для кнопки Clear */
+.x-btn-clear .x-btn-icon-el:before {
+    content: "\f00d" !important; /* fa-times */
+}
+
+/* Иконка для кнопки Paste */
+.x-btn-paste .x-btn-icon-el:before {
+    content: "\f0ea" !important; /* fa-paste */
+}
+
+/* Fallback иконки (если FontAwesome не загрузился) */
+.x-btn-format .x-btn-icon-el:before {
+    content: "⚙" !important;
+}
+
+.x-btn-clear .x-btn-icon-el:before {
+    content: "✕" !important;
+}
+
+.x-btn-paste .x-btn-icon-el:before {
+    content: "📋" !important;
+}
+
+/* Дополнительные стили для классической темы */
+.x-panel-header {
+    background: #F9F9F9;
+    border-bottom: 1px solid #B5B8C8;
+}
+
+/* Стили для кнопок в классической теме */
+.x-btn-default-small {
+    border: 1px solid #B5B8C8;
+    background: #F9F9F9;
+}
+
+.x-btn-default-small:hover {
+    background: #E8E8E8;
+}
+
+/* Стили для индикатора валидности JSON */
+.json-validation-valid {
+    color: #2E8B57;
+    background-color: #F0FFF0;
+    border: 1px solid #90EE90;
+    border-radius: 3px;
+}
+
+.json-validation-invalid {
+    color: #DC143C;
+    background-color: #FFF0F0;
+    border: 1px solid #FFB6C1;
+    border-radius: 3px;
+} 
